@@ -15,10 +15,10 @@ WAYPOINTS = [[2, 0.0],
 [3.37, -1],
 [3.39, 3],
 [2.57, 3.74],
-[-2, 3],
-[-2, -1],
-[0.98, -0.75],
-[0.82, -0.32],
+[-2.25, 3],
+[-2.25, -1],
+[1, -0.75],
+[1, -0.17],
 [0,0]]
 
 
@@ -134,8 +134,8 @@ class turtlebot_move():
             diff_y = y - self.y
             vector = np.array([diff_x, diff_y])
             linear = np.dot(vector, direction_vector) # projection
-            if abs(linear) > 0.2:
-                linear = linear/abs(linear)*0.2
+            if abs(linear) > 0.5:
+                linear = linear/abs(linear)*0.5
 
             angular = self.pid_theta.update(self.theta)
             if abs(angular) > 0.2:
