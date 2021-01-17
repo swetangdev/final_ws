@@ -10,16 +10,7 @@ from math import pi, sqrt, atan2
 
 # WAYPOINTS = [[0.157, 1.44], [-1.53, 1.4], [-1.82, 3.6], [0.643, 5], [5,0.643], [3.6,-1.82], [1.4,-1.53], [1.44, 0.157]]
 
-WAYPOINTS = [[2, 0.0],
-[2, -1.0],
-[3.37, -1],
-[3.39, 3],
-[2.57, 3.74],
-[-2.25, 3],
-[-2.25, -1],
-[1, -0.75],
-[1, -0.17],
-[0,0]]
+WAYPOINTS = [[1.85, 0.12], [3, 1.50], [3, 3.5], [-2, 3], [-1.17, 1.17], [-1, 0.0], [0.0,0.0]]
 
 
 class PID:
@@ -86,7 +77,7 @@ class turtlebot_move():
         # track a sequence of waypoints
         for point in WAYPOINTS:
             self.move_to_point(point[0], point[1])
-            rospy.sleep(1)
+            rospy.sleep(0.5)
         self.stop()
         rospy.logwarn("Action done.")
 
@@ -134,8 +125,8 @@ class turtlebot_move():
             diff_y = y - self.y
             vector = np.array([diff_x, diff_y])
             linear = np.dot(vector, direction_vector) # projection
-            if abs(linear) > 0.5:
-                linear = linear/abs(linear)*0.5
+            if abs(linear) > 0.6:
+                linear = linear/abs(linear)*0.6
 
             angular = self.pid_theta.update(self.theta)
             if abs(angular) > 0.2:
@@ -155,7 +146,7 @@ class turtlebot_move():
         self.vel.linear.x = 0
         self.vel.angular.z = 0
         self.vel_pub.publish(self.vel)
-        rospy.sleep(1)
+        rospy.sleep(2)
 
 
     def odom_callback(self, msg):
